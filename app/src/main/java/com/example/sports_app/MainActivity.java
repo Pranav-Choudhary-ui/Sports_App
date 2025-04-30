@@ -1,6 +1,8 @@
 package com.example.sports_app;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemClickListener{
 
     private RecyclerView recyclerView;
     private List<Sport> sportList;
@@ -53,5 +55,11 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(myAdapter);
 
+            myAdapter.setClickListener(this);
+
         }
+    @Override
+    public void onClick(View v, int pos) {
+        Toast.makeText(this,"You Choose:"+sportList.get(pos).getSportName(),Toast.LENGTH_SHORT).show();
+    }
 }

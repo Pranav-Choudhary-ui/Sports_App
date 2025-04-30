@@ -15,9 +15,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.SportsView
 
 
     private List<Sport> sportList;
+    private ItemClickListener clickListener;
 
     public CustomAdapter(List<Sport> sportList) {
         this.sportList = sportList;
+    }
+
+    public void setClickListener(ItemClickListener myListener){
+        this.clickListener = myListener;
     }
 
     
@@ -41,6 +46,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.SportsView
     public void onBindViewHolder(@NonNull SportsViewHolder holder, int position) {
 
         Sport sport = sportList.get(position);
+
         holder.textView.setText(sport.sportName);
         holder.imageView.setImageResource(sport.sportImg);
     }
@@ -51,7 +57,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.SportsView
     }
 
 
-    public static class SportsViewHolder extends RecyclerView.ViewHolder{
+    public  class SportsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textView;
         ImageView imageView;
@@ -62,6 +68,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.SportsView
 
             textView = itemView.findViewById(R.id.textView);
             imageView = itemView.findViewById(R.id.imageviewCard);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(clickListener != null){
+                clickListener.onClick(v,getAdapterPosition());
+            }
         }
     }
 }
